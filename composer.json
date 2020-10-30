@@ -7,6 +7,7 @@
         }
     ],
     "require": {
+        "ext-swoole": "*",
         "dflydev/fig-cookies": "^2.0",
         "nyholm/psr7": "^1.3",
         "nyholm/psr7-server": "^1.0"
