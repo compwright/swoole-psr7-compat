@@ -6,6 +6,7 @@
             "email": "jonathon@compwright.com"
         }
     ],
+    "license": "MIT",
     "require": {
         "ext-swoole": "*",
         "dflydev/fig-cookies": "^2.0",
