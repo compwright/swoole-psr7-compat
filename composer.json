@@ -1,0 +1,38 @@
+{
+    "name": "compwright/swoole-psr7-compat",
+    "authors": [
+        {
+            "name": "Jonathon Hill",
+            "email": "jonathon@compwright.com"
+        }
+    ],
+    "require": {
+        "dflydev/fig-cookies": "^2.0",
+        "nyholm/psr7": "^1.3",
+        "nyholm/psr7-server": "^1.0"
+    },
+    "require-dev": {
+        "phpspec/prophecy": "^1.12",
+        "symplify/easy-coding-standard": "^7.3",
+        "phpunit/phpunit": "^9.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Compwright\\SwoolePsr7Compat\\" : "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Compwright\\SwoolePsr7Compat\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "phpunit --coverage-text",
+        "test-coverage" : "phpunit --coverage-text",
+        "cs-check": "ecs check src tests",
+        "cs-fix": "ecs check src tests --fix"
+    }
+}
