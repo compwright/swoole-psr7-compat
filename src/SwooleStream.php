@@ -25,22 +25,22 @@ final class SwooleStream implements StreamInterface
     /**
      * Memoized body content, as pulled via SwooleHttpRequest::rawContent().
      */
-    private ?string $body = null;
+    private $body = null;
 
     /**
      * Length of the request body content.
      */
-    private ?int $bodySize = null;
+    private $bodySize = null;
 
     /**
      * Index to which we have seek'd or read within the request body.
      */
-    private int $index = 0;
+    private $index = 0;
 
     /**
      * Swoole request containing the body contents.
      */
-    private SwooleHttpRequest $request;
+    private $request;
 
     public function __construct(SwooleHttpRequest $request)
     {
@@ -138,7 +138,7 @@ final class SwooleStream implements StreamInterface
         $result = substr($this->body, $this->index, $length);
 
         // Reset index based on legnth; should not be > EOF position.
-        $size        = $this->getSize();
+        $size = $this->getSize();
         $this->index = $this->index + $length >= $size
             ? $size
             : $this->index + $length;
