@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/compwright/swoole-psr7-compat.svg?branch=master)](https://travis-ci.org/compwright/swoole-psr7-compat)
 [![Coverage Status](https://coveralls.io/repos/github/compwright/swoole-psr7-compat/badge.svg?branch=master)](https://coveralls.io/github/compwright/swoole-psr7-compat?branch=master)
 
-Converts PSR-7 Request/Response to Swoole Request/Response
+A tiny library for converting any PSR-7 request/response to Swoole
 
 ## Install
 

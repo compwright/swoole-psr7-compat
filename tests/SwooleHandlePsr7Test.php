@@ -67,9 +67,9 @@ class SwooleHandlePsr7Test extends TestCase
             ->withHttpOnly(true);
         $psrResponse = FigResponseCookies::set($psrResponse, $cookie);
 
-        $this->swooleResponseMock->cookie('foo', 'bar', 0, '/', '', false, false)->shouldBeCalled();
-        $this->swooleResponseMock->cookie('bar', 'baz', 0, '/', '', false, false)->shouldBeCalled();
-        $this->swooleResponseMock->cookie('baz', 'qux', 1623233894, '/', 'somecompany.co.uk', true, true)->shouldBeCalled();
+        $this->swooleResponseMock->cookie('foo', 'bar', 0, '/', '', false, false, '')->shouldBeCalled();
+        $this->swooleResponseMock->cookie('bar', 'baz', 0, '/', '', false, false, '')->shouldBeCalled();
+        $this->swooleResponseMock->cookie('baz', 'qux', 1623233894, '/', 'somecompany.co.uk', true, true, '')->shouldBeCalled();
         $this->swooleResponseMock->header('Set-Cookie', Argument::any())->shouldNotBeCalled();
         $this->swooleResponseMock->end()->shouldNotBeCalled();
         
@@ -98,13 +98,11 @@ class SwooleHandlePsr7Test extends TestCase
         $psrResponse = (new PsrResponse())
             ->withStatus(200)
             ->withHeader('Content-Type', 'text/plain')
-            ->withHeader('Content-Length', strlen($content))
-            ->withAddedHeader('Set-Cookie', 'foo=bar')
-            ->withAddedHeader('Set-Cookie', 'bar=baz');
+            ->withHeader('Content-Length', strlen($content));
 
-        $cookie = SetCookie::create('baz')
-            ->withValue('qux')
-            ->withDomain('somecompany.co.uk')
+        $cookie = SetCookie::create('foo')
+            ->withValue('bar')
+            ->withDomain('test.com')
             ->withPath('/')
             ->withExpires('Wed, 09 Jun 2021 10:18:14 GMT')
             ->withSecure(true)
@@ -116,9 +114,7 @@ class SwooleHandlePsr7Test extends TestCase
         $this->swooleResponseMock->status(200)->shouldBeCalled();
         $this->swooleResponseMock->header('Content-Type', 'text/plain')->shouldBeCalled();
         $this->swooleResponseMock->header('Content-Length', (string) strlen($content))->shouldBeCalled();
-        $this->swooleResponseMock->cookie('foo', 'bar', 0, '/', '', false, false)->shouldBeCalled();
-        $this->swooleResponseMock->cookie('bar', 'baz', 0, '/', '', false, false)->shouldBeCalled();
-        $this->swooleResponseMock->cookie('baz', 'qux', 1623233894, '/', 'somecompany.co.uk', true, true)->shouldBeCalled();
+        $this->swooleResponseMock->cookie('foo', 'bar', 1623233894, '/', 'test.com', true, true, '')->shouldBeCalled();
         $this->swooleResponseMock->header('Set-Cookie', Argument::any())->shouldNotBeCalled();
         $this->swooleResponseMock->write($content)->shouldBeCalled();
         $this->swooleResponseMock->end()->shouldNotBeCalled();

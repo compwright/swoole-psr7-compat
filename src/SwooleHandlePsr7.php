@@ -41,7 +41,7 @@ class SwooleHandlePsr7
             $swooleRequest->get ?? [],
             $swooleRequest->post ?? [],
             $swooleRequest->files ?? [],
-            $swooleRequest->rawContent() ?: ''
+            new SwooleStream($swooleRequest)
         );
         
         $psrResponse = $this->psrHandler->handle($psrRequest);
@@ -76,6 +76,10 @@ class SwooleHandlePsr7
     public static function emitCookies(PsrResponse $psrResponse, SwooleResponse $swooleResponse): void
     {
         foreach (SetCookies::fromResponse($psrResponse)->getAll() as $cookie) {
+            $sameSite = $cookie->getSameSite()
+                ? substr($cookie->getSameSite()->asString(), 9)
+                : '';
+
             $swooleResponse->cookie(
                 $cookie->getName(),
                 $cookie->getValue(),
@@ -83,7 +87,8 @@ class SwooleHandlePsr7
                 $cookie->getPath() ?: '/',
                 $cookie->getDomain() ?: '',
                 $cookie->getSecure(),
-                $cookie->getHttpOnly()
+                $cookie->getHttpOnly(),
+                $sameSite
             );
         }
     }
@@ -92,20 +97,21 @@ class SwooleHandlePsr7
     {
         $body = $psrResponse->getBody();
 
-        if ($body->isReadable() && $body->getSize() > $chunkSize) {
+        if ($body->isSeekable()) {
             $body->rewind();
+        }
+        
+        if (!$body->isReadable()) {
+            $swooleResponse->write((string) $body);
+        } elseif ($body->getSize() <= static::CHUNK_SIZE) {
+            $swooleResponse->write($body->getContents());
+        } else {
             while (!$body->eof()) {
                 $chunk = $body->read($chunkSize);
                 if (!empty($chunk)) {
                     $swooleResponse->write($chunk);
                 }
             }
-            return;
-        }
-
-        $bodyStr = (string) $body;
-        if (!empty($bodyStr)) {
-            $swooleResponse->write($bodyStr);
         }
     }
 }
