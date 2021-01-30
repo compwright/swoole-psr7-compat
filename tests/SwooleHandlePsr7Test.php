@@ -8,6 +8,7 @@ use Compwright\SwoolePsr7Compat\SwooleHandlePsr7;
 use Dflydev\FigCookies\FigResponseCookies;
 use Dflydev\FigCookies\SetCookie;
 use Nyholm\Psr7\Response as PsrResponse;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophet;
@@ -95,6 +96,23 @@ class SwooleHandlePsr7Test extends TestCase
     {
         $psrResponse = new PsrResponse();
         $this->swooleResponseMock->write()->shouldNotBeCalled();
+
+        $result = SwooleHandlePsr7::emitBody($psrResponse, $this->swooleResponseMock->reveal());
+        $this->assertSame($result, null);
+    }
+
+    public function testEmitStreamBody(): void
+    {
+        $psr17factory = new Psr17Factory();
+
+        $psrResponse = $psr17factory->createResponse()->withBody(
+            $psr17factory->createStreamFromFile(__DIR__ . '/test.txt')
+        );
+
+        $content = file_get_contents(__DIR__ . '/test.txt');
+
+        $this->swooleResponseMock->write($content)->shouldBeCalled();
+        $this->swooleResponseMock->end()->shouldNotBeCalled();
 
         $result = SwooleHandlePsr7::emitBody($psrResponse, $this->swooleResponseMock->reveal());
         $this->assertSame($result, null);
