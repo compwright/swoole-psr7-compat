@@ -100,10 +100,10 @@ class SwooleHandlePsr7
         if ($body->isSeekable()) {
             $body->rewind();
         }
-        
+
         if (!$body->isReadable()) {
             $swooleResponse->write((string) $body);
-        } elseif ($body->getSize() <= static::CHUNK_SIZE) {
+        } elseif ($body->getSize() > 0 && $body->getSize() <= static::CHUNK_SIZE) {
             $swooleResponse->write($body->getContents());
         } else {
             while (!$body->eof()) {

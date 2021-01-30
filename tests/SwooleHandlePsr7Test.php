@@ -91,6 +91,15 @@ class SwooleHandlePsr7Test extends TestCase
         $this->assertSame($result, null);
     }
 
+    public function testEmitEmptyBody(): void
+    {
+        $psrResponse = new PsrResponse();
+        $this->swooleResponseMock->write()->shouldNotBeCalled();
+
+        $result = SwooleHandlePsr7::emitBody($psrResponse, $this->swooleResponseMock->reveal());
+        $this->assertSame($result, null);
+    }
+
     public function testEmit(): void
     {
         $content = 'Hello, world!';
