@@ -1,1 +1,12 @@
-Hello, world
+POST /hello/joe?foo=bar HTTP/1.1
+User-Agent: PostmanRuntime/7.28.2
+Accept: */*
+Postman-Token: 131fef54-a5fb-4d65-9dd4-e0ce51d2d538
+Host: localhost:8090
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 7
+Cookie: Cookie_1=value
+
+bar=baz
