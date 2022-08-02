@@ -1,6 +1,9 @@
 {
     "name": "compwright/swoole-psr7-compat",
     "description": "PSR compatibility adapters for Swoole",
+    "keywords": [
+        "openswoole"
+    ],
     "authors": [
         {
             "name": "Jonathon Hill",

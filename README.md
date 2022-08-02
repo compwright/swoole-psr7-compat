@@ -1,9 +1,9 @@
-# Swoole PSR-7 Compatibility Package
+# Openswoole PSR-7 Compatibility Package
 
 [![Build Status](https://travis-ci.org/compwright/swoole-psr7-compat.svg?branch=master)](https://travis-ci.org/compwright/swoole-psr7-compat)
 [![Coverage Status](https://coveralls.io/repos/github/compwright/swoole-psr7-compat/badge.svg?branch=master)](https://coveralls.io/github/compwright/swoole-psr7-compat?branch=master)
 
-PSR compatibility adapters for [Swoole](https://www.swoole.co.uk)
+PSR compatibility adapters for [Openswoole](https://openswoole.com)
 
 ## Install
 
